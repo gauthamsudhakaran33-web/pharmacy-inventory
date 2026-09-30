@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Pharmacy Inventory</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        .navbar {
+            background: #198754;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            margin-bottom: 5px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #555;
+        }
+
+        .number {
+            font-size: 40px;
+            font-weight: bold;
+            color: #198754;
+        }
+
+        .warning {
+            color: #dc3545;
+        }
+
+        .actions {
+            margin-top: 35px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            margin-right: 10px;
+            background: #198754;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .button.secondary {
+            background: #0d6efd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2>💊 Pharmacy Inventory</h2>
+
+        <div class="nav-links">
+
+            <a href="{% url 'dashboard' %}">
+                Dashboard
+            </a>
+
+            <a href="{% url 'medicine_list' %}">
+                Medicines
+            </a>
+
+            <a href="/admin/">
+                Admin
+            </a>
+
+            <form method="post"
+                  action="{% url 'logout' %}"
+                  style="display:inline;">
+
+                {% csrf_token %}
+
+                <button class="logout-btn" type="submit">
+                    Logout
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="welcome">
+
+            <h1>Dashboard</h1>
+
+            <p>
+                Manage your pharmacy medicines and stock.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>Total Medicines</h3>
+
+                <div class="number">
+                    {{ total_medicines }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Low Stock</h3>
+
+                <div class="number warning">
+                    {{ low_stock }}
+                </div>
+
+                <p>Medicines need restocking</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Expired</h3>
+
+                <div class="number warning">
+                    {{ expired }}
+                </div>
+
+                <p>Expired medicines</p>
+
+            </div>
+            <div class="card">
+
+    <h3>Expiring Soon</h3>
+
+    <div class="number warning">
+        {{ expiring_soon }}
+    </div>
+
+    <p>Expiring within 30 days</p>
+
+</div>
+
+        </div>
+
+
+        <div class="actions">
+
+            <a class="button"
+               href="{% url 'medicine_list' %}">
+                📦 View Medicines
+            </a>
+
+            <a class="button secondary"
+               href="{% url 'add_medicine' %}">
+                + Add Medicine
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
